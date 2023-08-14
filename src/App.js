@@ -9,6 +9,7 @@ import Shop from "./routes/shop/shop.component";
 import Checkout from "./routes/checkout/checkout.component";
 import { checkUserSession } from "./store/user/user.action";
 import { useDispatch } from "react-redux";
+import CheckoutForm from "./routes/checkout-form/checkout-form.component";
 
 
 const App = () => {
@@ -26,6 +27,7 @@ const App = () => {
         <Route path="shop/*" element={<Shop />} />
         <Route path="auth" element={<Authentication />} />
         <Route path="checkout" element={<Checkout />} />
+        <Route path="checkout-form" element={<CheckoutForm />} />
       </Route>
     </Routes>
   );

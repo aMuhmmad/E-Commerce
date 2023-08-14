@@ -2,6 +2,8 @@ import CheckoutItem from "../../components/checkout-item/checkout-item.component
 
 import { useSelector } from "react-redux";
 import { selectCartItems, selectCartTotal } from "../../store/cart/cart.selector";
+import { useNavigate } from "react-router-dom";
+import Button, { BUTTON_TYPE_CLASSES } from "../../components/button/button.component";
 
 import {
     CheckoutContainer,
@@ -10,10 +12,20 @@ import {
     Total,
 } from './checkout.styles';
 
+
+
+
+
 const Checkout = () => {
 
-    const cartItems  = useSelector(selectCartItems);
-    const cartTotal  = useSelector(selectCartTotal);
+    const navigate = useNavigate();
+    const goToCheckoutFormHandler = () => {
+        navigate('/checkout-form');
+    };
+
+    const cartItems = useSelector(selectCartItems);
+    const cartTotal = useSelector(selectCartTotal);
+
 
     return (
         <CheckoutContainer>
@@ -38,6 +50,12 @@ const Checkout = () => {
                 <CheckoutItem key={cartItem.id} cartItem={cartItem} />
             ))}
             <Total>Total: ${cartTotal}</Total>
+            <Button
+                buttonType={BUTTON_TYPE_CLASSES.inverted}
+                onClick={goToCheckoutFormHandler}
+            >
+                Proceed to checkout
+            </Button>
         </CheckoutContainer>
     )
 }
