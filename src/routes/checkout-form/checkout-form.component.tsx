@@ -4,6 +4,7 @@ import { selectCartTotal } from "../../store/cart/cart.selector";
 import PaymentForm from "../../components/payment-form/payment-form.component";
 import { Elements } from "@stripe/react-stripe-js";
 import { stripePromise } from "../../utils/stripe/stripe.utils";
+import { Appearance, StripeElementsOptions } from "@stripe/stripe-js";
 
 const CheckoutForm = () => {
     const [clientSecret, setClientSecret] = useState("");
@@ -26,16 +27,16 @@ const CheckoutForm = () => {
     }, [cartTotal]);
 
 
-    const appearance = {
+    const appearance: Appearance = {
         theme: 'stripe',
     };
-    const options = {
+    const options: StripeElementsOptions = {
         clientSecret,
         appearance,
     };
     return (
         <>
-        
+
             {stripePromise && clientSecret && (
                 <Elements options={options} stripe={stripePromise}>
                     <PaymentForm />

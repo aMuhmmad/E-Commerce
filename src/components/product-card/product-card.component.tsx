@@ -12,8 +12,14 @@ import {
     Name,
     Price
 } from "./product-card.styles";
+import { CategoryItem } from '../../store/categories/category.types';
+import { FC } from 'react';
 
-const ProductCard = ({ product }) => {
+type ProductCardProps = {
+    product: CategoryItem;
+}
+
+const ProductCard: FC<ProductCardProps> = ({ product }) => {
 
     const { name, price, imageUrl } = product;
 

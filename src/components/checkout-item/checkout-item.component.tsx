@@ -10,11 +10,15 @@ import {
     Quantity,
     RemoveButton,
     Value
-} from './checkout-item.styles.js';
+} from './checkout-item.styles';
 import { selectCartItems } from '../../store/cart/cart.selector';
+import { CartItem } from '../../store/cart/cart.types';
+import { FC } from 'react';
 
-
-const CheckoutItem = ({ cartItem }) => {
+type CheckoutItemProps = {
+    cartItem: CartItem;
+  };
+const CheckoutItem:FC<CheckoutItemProps> = ({ cartItem }) => {
     const { imageUrl, price, name, quantity } = cartItem;
     
     const cartItems = useSelector(selectCartItems)

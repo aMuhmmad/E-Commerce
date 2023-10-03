@@ -2,9 +2,10 @@ import { PaymentElement, useElements, useStripe } from "@stripe/react-stripe-js"
 
 import { BUTTON_TYPE_CLASSES } from "../button/button.component";
 import { FormContainer, PaymentButton, PaymentFormContainer } from "./payment-form.styles";
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 import { useDispatch } from "react-redux";
 import { clearCart } from "../../store/cart/cart.action";
+import { StripePaymentElementOptions } from "@stripe/stripe-js";
 
 
 const PaymentForm = () => {
@@ -12,13 +13,13 @@ const PaymentForm = () => {
   const stripe = useStripe();
   const elements = useElements();
 
-  const [message, setMessage] = useState(null);
+  const [message, setMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
   const dispatch = useDispatch();
 
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (!stripe || !elements) {
@@ -27,29 +28,29 @@ const PaymentForm = () => {
 
     setIsLoading(true);
 
-    const { error,paymentIntent } = await stripe.confirmPayment({
+    const { error, paymentIntent } = await stripe.confirmPayment({
       elements,
-      redirect:'if_required'
+      redirect: 'if_required'
     });
 
 
     if (error) {
-      setMessage(error.message);
-    }else if(paymentIntent && paymentIntent.status === 'succeeded'){
+      setMessage((error.message!));
+    } else if (paymentIntent && paymentIntent.status === 'succeeded') {
       setMessage(`Payment status: ${paymentIntent.status}`);
       dispatch(clearCart());
       window.location.replace('/');
     }
-     else {
+    else {
       setMessage("An unexpected error occurred.");
     }
 
     setIsLoading(false);
-    
+
   };
 
 
-  const paymentElementOptions = {
+  const paymentElementOptions: StripePaymentElementOptions = {
     layout: "tabs"
   }
 
